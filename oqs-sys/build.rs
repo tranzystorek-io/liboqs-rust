@@ -151,9 +151,9 @@ fn probe_includedir() -> PathBuf {
 
     match config {
         Ok(lib) => lib.include_paths.first().cloned().unwrap(),
-        _ => {
+        Err(err) => {
             if force_no_vendor {
-                panic!("The env variable LIBOQS_NO_VENDOR has been set but a suitable system liboqs could not be found.");
+                panic!("The env variable LIBOQS_NO_VENDOR has been set but a suitable system liboqs could not be found: {:?}", err);
             }
 
             includedir_from_source()
